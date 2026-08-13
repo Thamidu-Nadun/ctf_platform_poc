@@ -1,0 +1,15 @@
+info:
+  name: delete instance
+  type: http
+  seq: 1
+
+http:
+  method: DELETE
+  url: "{{HOST}}/c/0caf232c-1153-4ac4-b661-dc9900bebf1c"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
