@@ -1,0 +1,19 @@
+services:
+  challenge-abc123:
+    build: ./challenges/the_endpoint
+    environment:
+      - INSTANCE=challenge-abc123
+    networks:
+      - ctf
+
+  gateway:
+    build: ./gateway
+    environment:
+      - PORT=3000
+    ports:
+      - 3000:3000
+    networks:
+      - ctf
+
+networks:
+  ctf:
