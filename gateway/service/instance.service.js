@@ -69,7 +69,11 @@ router.post("/c/:challengeId", async (req, res) => {
     await container.start();
 
     instances[instanceId] = `http://${containerName}:5000`;
-    res.status(201).json({ instanceId, containerName });
+    res.status(201).json({
+      instanceId,
+      containerName,
+      url: `http://localhost:3000/i/${instanceId}`,
+    });
   } catch (error) {
     console.error("Error creating instance:", error);
     res.status(500).send("Error creating instance");
