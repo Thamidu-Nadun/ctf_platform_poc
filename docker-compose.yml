@@ -1,15 +1,8 @@
 services:
-  challenge-abc123:
-    build: ./challenges/the_endpoint
-    environment:
-      - INSTANCE=challenge-abc123
-    networks:
-      - ctf
-
   gateway:
     build: ./gateway
-    environment:
-      - PORT=3000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 3000:3000
     networks:
@@ -17,3 +10,4 @@ services:
 
 networks:
   ctf:
+    name: ctf_network

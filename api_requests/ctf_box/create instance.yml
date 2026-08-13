@@ -1,0 +1,20 @@
+info:
+  name: create instance
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{HOST}}/c/ping_me"
+  auth: inherit
+
+runtime:
+  variables:
+    - name: HOST
+      value: http://localhost:3000
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
