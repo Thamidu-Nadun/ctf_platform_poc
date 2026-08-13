@@ -11,4 +11,4 @@ export const getDocker = async () => {
   return docker;
 };
 
-export const challenges = ["the-endpoint", "ping_me"];
+export const challenges = ["the_endpoint", "ping_me"];

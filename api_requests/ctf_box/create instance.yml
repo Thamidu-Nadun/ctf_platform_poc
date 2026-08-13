@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: "{{HOST}}/c/ping_me"
+  url: "{{HOST}}/c/the_endpoint"
   auth: inherit
 
 runtime:
