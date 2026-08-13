@@ -189,13 +189,19 @@ docker logs the_endpoint
 
 ### Test 3: Test an API Endpoint
 
-Using PowerShell (Windows), bash (Linux/Mac), or any API tool:
+Using PowerShell (Windows) to create a challenge instance:
 
-```bash
-curl -X GET http://localhost:3000/api/instances
+```powershell
+Invoke-WebRequest -Uri http://localhost:3000/c/ping_me -Method POST
 ```
 
-Or use Postman/Insomnia to make a GET request to the URL above.
+Using curl (Linux/Mac):
+
+```bash
+curl -X POST http://localhost:3000/c/ping_me
+```
+
+This should return a JSON response with an `instanceId` and `url`.
 
 ---
 
@@ -215,45 +221,64 @@ http://localhost:3000
 
 ### 3. Create a Challenge Instance
 
-**Using curl/PowerShell:**
+**Using PowerShell (Windows):**
+
+```powershell
+# Create a ping_me instance
+Invoke-WebRequest -Uri http://localhost:3000/c/ping_me -Method POST
+
+# Create a the_endpoint instance
+Invoke-WebRequest -Uri http://localhost:3000/c/the_endpoint -Method POST
+```
+
+**Using curl (Linux/Mac):**
 
 ```bash
-$body = @{
-    challenge = "ping_me"
-    user_id = "user123"
-} | ConvertTo-Json
+# Create a ping_me instance
+curl -X POST http://localhost:3000/c/ping_me
 
-Invoke-WebRequest -Uri http://localhost:3000/api/instance/create `
-    -Method POST `
-    -ContentType "application/json" `
-    -Body $body
+# Create a the_endpoint instance
+curl -X POST http://localhost:3000/c/the_endpoint
 ```
 
-**Using the API:**
+**Expected Response:**
 
-```
-POST http://localhost:3000/api/instance/create
-Content-Type: application/json
-
+```json
 {
-  "challenge": "ping_me",
-  "user_id": "user123"
+  "instanceId": "550e8400-e29b-41d4-a716-446655440000",
+  "containerName": "challenge-550e8400-e29b-41d4-a716-446655440000",
+  "url": "http://localhost:3000/i/550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
 ### 4. Access the Challenge
 
-Once created, access your challenge at:
+Use the `url` from the response above. For example:
 
 ```
-http://localhost:<challenge_port>
+http://localhost:3000/i/550e8400-e29b-41d4-a716-446655440000
 ```
 
-Usually `http://localhost:5000` for the first instance.
+Open it directly in your browser using the returned URL.
 
-### 5. Stop the Platform
+### 5. Delete a Challenge Instance
 
-When you're done:
+When you're done with an instance:
+
+```bash
+# Replace INSTANCE_ID with your instance ID
+curl -X DELETE http://localhost:3000/c/INSTANCE_ID
+```
+
+Or using PowerShell:
+
+```powershell
+Invoke-WebRequest -Uri http://localhost:3000/c/INSTANCE_ID -Method DELETE
+```
+
+### 6. Stop the Platform
+
+When you're done with the entire platform:
 
 ```bash
 docker-compose down
